@@ -42,6 +42,18 @@ public class IntCodeInterpreter {
                 case 4:
                     runOpCode4(modes);
                     break;
+                case 5:
+                    runOpCode5(modes);
+                    break;
+                case 6:
+                    runOpCode6(modes);
+                    break;
+                case 7:
+                    runOpCode7(modes);
+                    break;
+                case 8:
+                    runOpCode8(modes);
+                    break;
                 case 99:
                     return memory[0];
                 default:
@@ -90,6 +102,40 @@ public class IntCodeInterpreter {
         int output = memory[memory[address + 1]];
         System.out.println(output);
         address += 2;
+    }
+
+    private void runOpCode5(int[] modes) {
+        if (getValue(modes[0], address + 1) != 0) {
+            address = getValue(modes[1], address + 2);
+        } else {
+            address += 3;
+        }
+    }
+
+    private void runOpCode6(int[] modes) {
+        if (getValue(modes[0], address + 1) == 0) {
+            address = getValue(modes[1], address + 2);
+        } else {
+            address += 3;
+        }
+    }
+
+    private void runOpCode7(int[] modes) {
+        if (getValue(modes[0], address + 1) < getValue(modes[1], address + 2)) {
+            memory[memory[address + 3]] = 1;
+        } else {
+            memory[memory[address + 3]] = 0;
+        }
+        address += 4;
+    }
+
+    private void runOpCode8(int[] modes) {
+        if (getValue(modes[0], address + 1) == getValue(modes[1], address + 2)) {
+            memory[memory[address + 3]] = 1;
+        } else {
+            memory[memory[address + 3]] = 0;
+        }
+        address += 4;
     }
     
 }
