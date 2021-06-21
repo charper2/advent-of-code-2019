@@ -12,10 +12,17 @@ public class DayTwo {
         System.out.println(partTwo());
     }
 
+    private int[] setInitalState(int[] memory, int noun, int verb) {
+        memory[1] = noun;
+        memory[2] = verb;
+        return memory;
+    }
+
     private int partOne() {
         int[] copy = Arrays.copyOf(input, input.length);
         IntCodeInterpreter interpreter = new IntCodeInterpreter(copy);
-        return interpreter.runProgram(12, 2);
+        setInitalState(copy, 12, 2);
+        return interpreter.runProgram();
     }
 
     private Integer partTwo() {
@@ -24,7 +31,8 @@ public class DayTwo {
             for (int j = 0; j < inputLen; j++) {
                 int[] copy = Arrays.copyOf(input, input.length);
                 IntCodeInterpreter interpreter = new IntCodeInterpreter(copy);
-                int val = interpreter.runProgram(i, j);
+                setInitalState(copy, i, j);
+                int val = interpreter.runProgram();
                 if (val == 19690720) {
                     return (100 * i) + j;
                 }

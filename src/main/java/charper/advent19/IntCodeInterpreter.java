@@ -18,13 +18,6 @@ public class IntCodeInterpreter {
         return memory;
     }
 
-    // For Day 2
-    public int runProgram(int noun, int verb) {
-        memory[1] = noun;
-        memory[2] = verb;
-        return runProgram();
-    }
-
     public int runProgram() {
         while(address < memory.length + 1) {
             int opcode = getOpCode(memory[address]);
