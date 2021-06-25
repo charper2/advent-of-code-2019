@@ -1,5 +1,7 @@
 package charper.advent19;
 
+import static charper.advent19.Utils.getNthDigit;
+
 public class IntCodeInterpreter {
     private final int[] memory;
     private int input;
@@ -57,7 +59,7 @@ public class IntCodeInterpreter {
     }
 
     private int getOpCode(int value) {
-        return value % 10 + ((value / 10) % 10) * 10;
+        return getNthDigit(0, value) + getNthDigit(1, value) * 10;
     }
 
     private int[] getModes(int opCode) {

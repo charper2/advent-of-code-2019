@@ -22,6 +22,10 @@ public class DayFour {
         return matches.size();
     }
 
+    private Integer getNthDigit(int n, int number) {
+        return number / (int)Math.pow(10, n) % 10;
+    }
+
     private Integer partTwo() {
         List<Integer> matches = new ArrayList<>();
         for (int i = START; i <= END; i++) {
@@ -33,11 +37,11 @@ public class DayFour {
     }
 
     private boolean isDigitsIncreasing(int password) {
-        if (password % 10 >= password /10 % 10 &&
-            password / 10 % 10 >= password / 100 % 10 &&
-            password / 100 % 10 >= password/ 1000 % 10 &&
-            password / 1000 % 10 >= password / 10000 % 10 &&
-            password / 10000 % 10 >= password / 100000) 
+        if (getNthDigit(0, password) >= getNthDigit(1, password) &&
+            getNthDigit(1, password) >= getNthDigit(2, password) &&
+            getNthDigit(2, password) >= getNthDigit(3, password) &&
+            getNthDigit(3, password) >= getNthDigit(4, password) &&
+            getNthDigit(4, password) >= getNthDigit(5, password))
         {
             return true;
         }
@@ -45,11 +49,11 @@ public class DayFour {
     } 
 
     private boolean isTwoAdjacentDigitsSame(int password) {
-        if (password % 10 == password /10 % 10 ||
-            password / 10 % 10 == password / 100 % 10 ||
-            password / 100 % 10 == password/ 1000 % 10 ||
-            password / 1000 % 10 == password / 10000 % 10 ||
-            password / 10000 % 10 == password / 100000) 
+        if (getNthDigit(0, password) == getNthDigit(1, password) ||
+            getNthDigit(1, password) == getNthDigit(2, password) ||
+            getNthDigit(2, password) == getNthDigit(3, password) ||
+            getNthDigit(3, password) == getNthDigit(4, password) ||
+            getNthDigit(4, password) == getNthDigit(5, password))
         {
             return true;
         }
@@ -57,20 +61,20 @@ public class DayFour {
     }
 
     private boolean exactlyTwoAdjacentDigitsSame(int password) {
-        int ones = password % 10;
-        int tens = password / 10 % 10;
-        int huns = password / 100 % 10;
-        int thous = password / 1000 % 10;
-        int ten_thous = password / 10000 % 10;
-        int hun_thous = password / 100000;
+        int ones = getNthDigit(0, password);
+        int tens = getNthDigit(1, password);
+        int huns = getNthDigit(2, password);
+        int thous = getNthDigit(3, password);
+        int ten_thous = getNthDigit(4, password);
+        int hun_thous = getNthDigit(5, password);
         if ((ones == tens && tens != huns) ||
             (ones != tens && tens == huns && huns != thous) ||
             (tens != huns && huns == thous && thous != ten_thous) ||
             (huns != thous && thous == ten_thous && ten_thous != hun_thous) ||
-            (thous != ten_thous && ten_thous == hun_thous)) 
+            (thous != ten_thous && ten_thous == hun_thous))
         {
             return true;
         }
-        return false;   
+        return false;
     }
 }

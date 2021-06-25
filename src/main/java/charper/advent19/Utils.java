@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
 public class Utils {
     
     private Utils() {}
+
+    public static Integer getNthDigit(int n, int number) {
+        return number / (int)Math.pow(10, n) % 10;
+    }
     
     public static List<Integer> getIntegers() {
         List<Integer> integers = new ArrayList<>();
