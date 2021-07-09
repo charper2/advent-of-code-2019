@@ -2,7 +2,9 @@ package charper.advent19.day7;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import charper.advent19.IntCodeInterpreter;
 import static charper.advent19.Utils.getPermutations;
@@ -12,6 +14,7 @@ public class DaySeven {
 
     public DaySeven() {
         System.out.println(partOne(MEMORY));
+        System.out.println(partTwo(MEMORY));
     }
 
     private int partOne(int[] mem) {
@@ -21,6 +24,20 @@ public class DaySeven {
         int maximumOutput = 0;
         for (Integer[] perm : perms) {
             int output = computeOutput(mem, perm);
+            if (output > maximumOutput) {
+                maximumOutput = output;
+            };
+        }
+        return maximumOutput;
+    }
+
+    private int partTwo(int[] mem) {
+        Integer[] phases = {5, 6, 7, 8, 9};
+        List<Integer[]> perms = new ArrayList<>();
+        getPermutations(phases, 5, perms);
+        int maximumOutput = 0;
+        for (Integer[] perm : perms) {
+            int output = computeOutput2(mem, perm);
             if (output > maximumOutput) {
                 maximumOutput = output;
             };
@@ -41,5 +58,36 @@ public class DaySeven {
         int[] copy = Arrays.copyOf(mem, mem.length);
         IntCodeInterpreter amp = new IntCodeInterpreter(copy, phase, input);
         return amp.runProgram();
+    }
+
+    private int computeOutput2(int[] mem, Integer[] phases) {
+        // create amplifier sequence
+        int input = 0;
+        int lastOutput = 0; 
+        int i = 0;
+        Map<Integer, IntCodeInterpreter> amplifiers = new HashMap<>();
+        while (true) {
+            int[] copy = Arrays.copyOf(mem, mem.length);
+            IntCodeInterpreter amp;
+            int output;
+            if (amplifiers.containsKey(i)) {
+                amp = amplifiers.get(i);
+                output = amp.runInput(input);
+            }
+            else {
+                amp = new IntCodeInterpreter(copy, phases[i], input);
+                output = amp.runProgram();
+                amplifiers.put(i, amp);
+            }
+            if (i == 4) {
+                lastOutput = output;
+            }
+            if (amp.isHalt() == true) {
+                return lastOutput;
+            }
+            input = output;
+            i++;
+            if (i == 5) { i = 0; }
+        }
     }
 }

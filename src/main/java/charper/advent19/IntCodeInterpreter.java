@@ -8,6 +8,7 @@ public class IntCodeInterpreter {
     private final int[] memory;
     private LinkedList<Integer> input = new LinkedList<>();
     private int address = 0;
+    private boolean halt = false;
 
     public IntCodeInterpreter(int[] memory) {
         this.memory = memory;
@@ -23,6 +24,15 @@ public class IntCodeInterpreter {
         for (int in : inputs) {
             this.input.add(in);
         }
+    }
+
+    public Integer runInput(int input) {
+        this.input.add(input);
+        return runProgram();
+    }
+
+    public boolean isHalt() {
+        return this.halt;
     }
 
     public int[] getMemory() {
@@ -59,6 +69,7 @@ public class IntCodeInterpreter {
                     runOpCode8(modes);
                     break;
                 case 99:
+                    halt = true;
                     return memory[0];
                 default:
                     throw new RuntimeException("Unknown OpCode");
