@@ -13,8 +13,49 @@ public class Utils {
     
     private Utils() {}
 
+    private static Integer[] copy(Integer[] input) {
+        Integer[] copy = new Integer[input.length];
+        for (int i = 0; i < input.length; i++) {
+            copy[i] = input[i];
+        }
+        return copy;
+    }
+
+    public static void getPermutations(Integer[] input, int n, List<Integer[]> perms) {
+        if (n == 1) {
+            perms.add(copy(input));
+            return;
+        }
+        for (int i = 0; i < n-1 + 1; i++) {
+            Integer[] temp = input;
+            getPermutations(temp, n-1, perms);
+            if (n % 2 == 0) {
+                Integer save = temp[i];
+                temp[i] = temp[n-1];
+                temp[n-1] = save;
+            }
+            else {
+                Integer save = temp[0];
+                temp[0] = temp[n-1];
+                temp[n-1] = save;
+            }
+        }
+    }
+
     public static Integer getNthDigit(int n, int number) {
-        return number / (int)Math.pow(10, n) % 10;
+        return number / pow10(n) % 10;
+    }
+
+    private static Integer pow10(int n) {
+        int val = 1;
+        if (n == 0) {
+            return 1;
+        }
+        while (n > 0) {
+            val *= 10;
+            n--;
+        }
+        return val;
     }
     
     public static List<Integer> getIntegers() {

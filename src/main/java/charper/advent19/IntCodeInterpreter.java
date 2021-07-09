@@ -2,18 +2,27 @@ package charper.advent19;
 
 import static charper.advent19.Utils.getNthDigit;
 
+import java.util.LinkedList;
+
 public class IntCodeInterpreter {
     private final int[] memory;
-    private int input;
+    private LinkedList<Integer> input = new LinkedList<>();
     private int address = 0;
 
     public IntCodeInterpreter(int[] memory) {
         this.memory = memory;
     }
 
-    public IntCodeInterpreter(int[] memory, int input) {
+    public IntCodeInterpreter(int[] memory, int in) {
         this.memory = memory;
-        this.input = input;
+        this.input.add(in);
+    }
+
+    public IntCodeInterpreter(int[] memory, int... inputs) {
+        this.memory = memory;
+        for (int in : inputs) {
+            this.input.add(in);
+        }
     }
 
     public int[] getMemory() {
@@ -35,8 +44,8 @@ public class IntCodeInterpreter {
                     runOpCode3(modes);
                     break;
                 case 4:
-                    runOpCode4(modes);
-                    break;
+                    return runOpCode4(modes);
+                    // break;
                 case 5:
                     runOpCode5(modes);
                     break;
@@ -89,14 +98,15 @@ public class IntCodeInterpreter {
 
     private void runOpCode3(int[] modes) {
         // will always run in position mode 0
-        memory[memory[address + 1]] = input;
+        memory[memory[address + 1]] = input.removeFirst();
         address += 2;
     }
 
-    private void runOpCode4(int[] modes) {
+    private Integer runOpCode4(int[] modes) {
         int output = memory[memory[address + 1]];
-        System.out.println(output);
+        // System.out.println(output);
         address += 2;
+        return output;
     }
 
     private void runOpCode5(int[] modes) {
