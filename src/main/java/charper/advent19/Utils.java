@@ -42,8 +42,8 @@ public class Utils {
         }
     }
 
-    public static Integer getNthDigit(int n, int number) {
-        return number / pow10(n) % 10;
+    public static Integer getNthDigit(int n, long number) {
+        return (int) number / pow10(n) % 10;
     }
 
     private static Integer pow10(int n) {

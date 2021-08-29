@@ -57,7 +57,7 @@ public class DaySeven {
     private Integer runAmplifier(int[] mem, int input, int phase) {
         int[] copy = Arrays.copyOf(mem, mem.length);
         IntCodeInterpreter amp = new IntCodeInterpreter(copy, phase, input);
-        return amp.runProgram();
+        return (int)amp.runProgram();
     }
 
     private int computeOutput2(int[] mem, Integer[] phases) {
@@ -72,11 +72,11 @@ public class DaySeven {
             int output;
             if (amplifiers.containsKey(i)) {
                 amp = amplifiers.get(i);
-                output = amp.runInput(input);
+                output = (int)amp.runInput(input);
             }
             else {
                 amp = new IntCodeInterpreter(copy, phases[i], input);
-                output = amp.runProgram();
+                output = (int)amp.runProgram();
                 amplifiers.put(i, amp);
             }
             if (i == 4) {

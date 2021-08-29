@@ -15,12 +15,12 @@ public class DayFive {
     private int partOne() {
         int[] copy = Arrays.copyOf(input, input.length);
         IntCodeInterpreter interpreter = new IntCodeInterpreter(copy, 1);
-        return interpreter.runProgram();
+        return (int)interpreter.runProgram();
     }
 
     private int partTwo() {
         int[] copy = Arrays.copyOf(input, input.length);
         IntCodeInterpreter interpreter = new IntCodeInterpreter(copy, 5);
-        return interpreter.runProgram();
+        return (int)interpreter.runProgram();
     }
 }

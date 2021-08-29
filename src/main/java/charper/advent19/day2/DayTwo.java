@@ -18,7 +18,7 @@ public class DayTwo {
         return memory;
     }
 
-    private int partOne() {
+    private long partOne() {
         int[] copy = Arrays.copyOf(input, input.length);
         IntCodeInterpreter interpreter = new IntCodeInterpreter(copy);
         setInitalState(copy, 12, 2);
@@ -32,7 +32,7 @@ public class DayTwo {
                 int[] copy = Arrays.copyOf(input, input.length);
                 IntCodeInterpreter interpreter = new IntCodeInterpreter(copy);
                 setInitalState(copy, i, j);
-                int val = interpreter.runProgram();
+                long val = interpreter.runProgram();
                 if (val == 19690720) {
                     return (100 * i) + j;
                 }
